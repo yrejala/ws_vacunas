@@ -1,0 +1,19 @@
+<queries>
+		
+	
+	<query>
+		<name>select_timbrado</name>
+		<value>
+			SELECT tim.id, numero, idfiscal, fechadesde, fechahasta,tipomov, numeroactual, 
+			suc.nombre as sucursal, pe.nombre as puntoexpedicion
+			FROM timbrado tim JOIN sucursal suc
+			ON suc.id = tim.sucursal_id
+			JOIN punto_expedicion pe 
+			ON pe.id = tim.puntoexpedicion_id
+		</value>
+	</query>
+	<query>
+		<name>filter_timbrado</name>
+		<value>numero||idfiscal||fechadesde||fechahasta||tipomov||numeroactual||suc.nombre||pe.nombre</value>
+	</query>
+</queries>
