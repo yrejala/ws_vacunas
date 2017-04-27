@@ -14,7 +14,7 @@ import py.una.pol.ws.main.AppObjects;
 @Repository
 public class DaoImpl {
 
-	private static final String ds ="java:jboss/datasources/aguappDS";
+	protected static final String ds = "java:jboss/datasources/aguappDS";
 	@Autowired
 	private AppObjects appObjects;
 
@@ -22,7 +22,7 @@ public class DaoImpl {
 		return appObjects.getDataSourcePool();
 	}
 
-	public <L> List<L> getListFromSQL(String dataSource, String sql, Class<L> clazz, Object ... params) {
+	public <L> List<L> getListFromSQL(String dataSource, String sql, Class<L> clazz, Object... params) {
 
 		SQLToObject<L> sqlToObject = new SQLToObject<>(appObjects.getDataSourcePool());
 		sqlToObject.setRecordClass(clazz);
@@ -34,13 +34,12 @@ public class DaoImpl {
 		}
 	}
 
-	public <L> List<L> getListFromSQL(Class<L> clazz, String sql, Object ... params) {
+	public <L> List<L> getListFromSQL(Class<L> clazz, String sql, Object... params) {
 
 		return getListFromSQL(ds, sql, clazz, params);
 	}
 
-
-	public <L> L getObjectFromSQL(String sql, Class<L> clazz, Object ... params) {
+	public <L> L getObjectFromSQL(String sql, Class<L> clazz, Object... params) {
 
 		SQLToObject<L> sqlToObject = new SQLToObject<>(appObjects.getDataSourcePool());
 		sqlToObject.setRecordClass(clazz);
@@ -52,7 +51,7 @@ public class DaoImpl {
 		}
 	}
 
-	public void create(String sql, Object ...params) {
+	public void create(String sql, Object... params) {
 		SQLExecuter executer = new SQLExecuter(getDsPool());
 		executer.execute(ds, sql, params);
 	}

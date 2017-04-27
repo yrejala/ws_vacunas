@@ -10,7 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,17 +29,17 @@ public class UsuarioController {
 	private UsuarioDao usuarioDao;
 
 	@GetMapping("/list")
-	public List<Usuario> list(){
+	public List<Usuario> list() {
 		try {
 			return usuarioDao.getList();
-		}catch(Exception ex) {
+		} catch (Exception ex) {
 			ex.printStackTrace();
 			return new ArrayList<>();
 		}
 	}
 
 	@PostMapping("/add")
-	public ResponseEntity<Respuesta<Usuario> > insert(@Valid Usuario usuario, BindingResult bindingResult) {
+	public ResponseEntity<Respuesta<Usuario>> insert(@Valid Usuario usuario, BindingResult bindingResult) {
 
 		Respuesta<Usuario> resp = new Respuesta<>();
 		resp.setDato(usuario);
@@ -45,7 +47,7 @@ public class UsuarioController {
 			resp.setExito(false);
 			resp.setExitoMsg("Errores de validación");
 			List<ErrorCampo> errorList = new ArrayList<>();
-			for (FieldError fe: bindingResult.getFieldErrors()) {
+			for (FieldError fe : bindingResult.getFieldErrors()) {
 				ErrorCampo ec = new ErrorCampo();
 				ec.setCampo(fe.getField());
 				ec.setError(fe.getDefaultMessage());
@@ -61,11 +63,64 @@ public class UsuarioController {
 			resp.setExitoMsg("Registro creado con éxito");
 
 			return new ResponseEntity<>(resp, HttpStatus.OK);
-		}catch(Exception ex) {
+		} catch (Exception ex) {
 			resp.setExito(false);
 			resp.setErrorMsg(ex.getMessage());
 			ex.printStackTrace();
 			return new ResponseEntity<>(resp, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+
+	@GetMapping("/{id}") // Entre corchetes por que recibe un valor
+	public ResponseEntity<Usuario> buscar(@PathVariable Integer id) {
+		try {
+			Usuario u = usuarioDao.find(id);
+			if (u == null) {
+				return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
+			} else {
+				return new ResponseEntity<>(u, HttpStatus.OK);
+			}
+
+		} catch (Exception ex) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	// Buscar por correo
+	@GetMapping("/email/{correo}") // Entre corchetes por que recibe un valor
+	public ResponseEntity<Usuario> buscarCorreo(@PathVariable String correo) {
+		try {
+			/* Usuario u = usuarioDao.findCorreo(correo); */
+
+			Usuario u = new Usuario();
+			u.setNombre("nombre_prueba_directo");
+			u.setCorreo("correoPrueba3@gmail.com");
+
+			if (u == null) {
+				return new ResponseEntity<Usuario>(HttpStatus.UNPROCESSABLE_ENTITY);
+			} else {
+				return new ResponseEntity<Usuario>(u, HttpStatus.OK);
+			}
+
+		} catch (Exception ex) {
+			return new ResponseEntity<Usuario>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Usuario> borrar(@PathVariable Integer id) {
+		try {
+			Usuario u = usuarioDao.find(id);
+			if (u == null) {
+				return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
+			} else {
+				usuarioDao.borrar(id);
+				return new ResponseEntity<>(u, HttpStatus.OK);
+			}
+		} catch (Exception ex) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+	}
+
 }

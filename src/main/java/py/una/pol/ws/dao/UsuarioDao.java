@@ -11,4 +11,8 @@ public interface UsuarioDao {
 
 	Usuario find(Integer id);
 
+	Usuario findCorreo(String correo);// Interfaz para buscar por correo
+
+	void borrar(Integer id);
+
 }
