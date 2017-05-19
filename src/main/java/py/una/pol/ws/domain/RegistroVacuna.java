@@ -1,34 +1,64 @@
 package py.una.pol.ws.domain;
 
+import java.util.Date;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Email;
 
-public class Usuario {
-	private Integer id;
+public class RegistroVacuna {
 
-	@NotNull(message="Debe ingresar nombre")
-	private String nombre;
-	@NotNull(message="Debe ingresar correo")
-	@Email(message="Email mal formado")
-	private String correo;
-	public Integer getId() {
-		return id;
-	}
-	public void setId(Integer id) {
-		this.id = id;
-	}
-	public String getNombre() {
-		return nombre;
-	}
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-	public String getCorreo() {
-		return correo;
-	}
-	public void setCorreo(String correo) {
-		this.correo = correo;
-	}
+    private String nombreVacuna;
+    private String descripcionVacuna;
+    private Integer dosis;
+    private Integer meses;
+    private Date fechaApli;
+    private String responsable;
+
+    public String getNombreVacuna() {
+        return nombreVacuna;
+    }
+
+    public void setNombreVacuna(String nombreVacuna) {
+        this.nombreVacuna = nombreVacuna;
+    }
+    public String getDescripcionVacuna() {
+        return descripcionVacuna;
+    }
+
+    public void setDescripcionVacuna(String descripcionVacuna) {
+        this.descripcionVacuna = descripcionVacuna;
+    }
+    
+    public Integer getDosis() {
+        return dosis;
+    }
+
+    public void setDosis(Integer dosis) {
+        this.dosis = dosis;
+    }
+
+    public Integer getMeses() {
+        return meses;
+    }
+
+    public void setMeses(Integer meses) {
+        this.meses = meses;
+    }
+
+    public Date getFechaApli() {
+        return fechaApli;
+    }
+
+    public void setFechaApli(Date fechaApli) {
+        this.fechaApli = fechaApli;
+    }
+
+    public String getResponsable() {
+        return responsable;
+    }
+
+    public void setResponsable(String responsable) {
+        this.responsable = responsable;
+    }
 
 }

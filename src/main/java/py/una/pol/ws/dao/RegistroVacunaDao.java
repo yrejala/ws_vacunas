@@ -1,18 +1,12 @@
 package py.una.pol.ws.dao;
 
 import java.util.List;
+import org.springframework.http.ResponseEntity;
 
-import py.una.pol.ws.domain.Usuario;
+import py.una.pol.ws.domain.RegistroVacuna;
 
-public interface UsuarioDao {
-	List<Usuario> getList();
+public interface RegistroVacunaDao {
 
-	void create(Usuario usuario);
-
-	Usuario find(Integer id);
-
-	Usuario findCorreo(String correo);// Interfaz para buscar por correo
-
-	void borrar(Integer id);
+    List<RegistroVacuna> getListByHijoId(Integer HijoId);
 
 }

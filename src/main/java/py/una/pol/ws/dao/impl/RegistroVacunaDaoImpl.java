@@ -5,43 +5,20 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import py.una.cnc.lib.db.dataprovider.SQLExecuter;
-import py.una.pol.ws.dao.UsuarioDao;
-import py.una.pol.ws.domain.Usuario;
+import py.una.pol.ws.dao.HijosDao;
+import py.una.pol.ws.dao.RegistroVacunaDao;
+import py.una.pol.ws.domain.Correo;
+import py.una.pol.ws.domain.Hijo;
+import py.una.pol.ws.domain.RegistroVacuna;
 
 @Repository
-public class UsuarioDaoImpl extends DaoImpl implements UsuarioDao {
+public class RegistroVacunaDaoImpl extends DaoImpl implements RegistroVacunaDao {
 
-	@Override
-	public List<Usuario> getList() {
+    @Override
+    public List<RegistroVacuna> getListByHijoId(Integer hijoId) {
 
-		return getListFromSQL(Usuario.class, "SELECT id, nombre, correo FROM usuarios");
-	}
+        //return getListFromSQL(RegistroVacuna.class, "SELECT id, nombre, apellido, fecha_nac as \"fechaNac\" FROM hijos WHERE id_usuario = ?", hijoId);
+        return getListFromSQL(RegistroVacuna.class, "select v.nombre as \"nombreVacuna\", v.descripcion as \"descripcionVacuna\", v.dosis, v.meses, rv.fecha_apli as \"fechaApli\", rv.responsable from vacunas v, registro_vacunas rv where v.id = rv.id_vacuna and rv.id_hijo = ?", hijoId);
+    }
 
-	@Override
-	public void create(Usuario usuario) {
-		String sql = "INSERT INTO usuarios(nombre, correo) VALUES (?, ?)";
-		super.create(sql, usuario.getNombre(), usuario.getCorreo());
-
-	}
-
-	@Override
-	public Usuario find(Integer id) {
-		String sql = "SELECT id, nombre, correo FROM usuarios WHERE id = ?";
-		return super.getObjectFromSQL(sql, Usuario.class, id);
-	}
-
-	// Buscar por correo
-	@Override
-	public Usuario findCorreo(String correo) {
-		String sql = "SELECT id, nombre, correo FROM usuarios WHERE correo = ?";
-		return super.getObjectFromSQL(sql, Usuario.class, correo);
-	}
-
-	@Override
-	public void borrar(Integer id) {
-		String sql = "DELETE FROM usuarios WHERE id = ?";
-		SQLExecuter exec = new SQLExecuter(getDsPool());
-		exec.execute(ds, sql, id);
-
-	}
 }

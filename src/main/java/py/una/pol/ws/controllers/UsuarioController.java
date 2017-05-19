@@ -87,25 +87,25 @@ public class UsuarioController {
 	}
 
 	// Buscar por correo
-	@GetMapping("/email/{correo}") // Entre corchetes por que recibe un valor
-	public ResponseEntity<Usuario> buscarCorreo(@PathVariable String correo) {
-		try {
-			/* Usuario u = usuarioDao.findCorreo(correo); */
+	//@GetMapping("/email/{correo:.+}") // Entre corchetes por que recibe un valor
+	//public ResponseEntity<Usuario> buscarCorreo(@PathVariable String correo) {
+	//	try {
+        //                Usuario u = usuarioDao.findCorreo(correo);
 
-			Usuario u = new Usuario();
+			/*Usuario u = new Usuario();
 			u.setNombre("nombre_prueba_directo");
-			u.setCorreo("correoPrueba3@gmail.com");
+			u.setCorreo("correoPrueba3@gmail.com"); */
 
-			if (u == null) {
-				return new ResponseEntity<Usuario>(HttpStatus.UNPROCESSABLE_ENTITY);
-			} else {
-				return new ResponseEntity<Usuario>(u, HttpStatus.OK);
-			}
+	//		if (u == null) {
+	//			return new ResponseEntity<Usuario>(HttpStatus.UNPROCESSABLE_ENTITY);
+	//		} else {
+	//			return new ResponseEntity<Usuario>(u, HttpStatus.OK);
+	//		}
 
-		} catch (Exception ex) {
-			return new ResponseEntity<Usuario>(HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
+	//	} catch (Exception ex) {
+	//		return new ResponseEntity<Usuario>(HttpStatus.INTERNAL_SERVER_ERROR);
+	//	}
+	//}
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Usuario> borrar(@PathVariable Integer id) {

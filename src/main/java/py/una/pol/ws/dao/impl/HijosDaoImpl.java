@@ -5,43 +5,18 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import py.una.cnc.lib.db.dataprovider.SQLExecuter;
-import py.una.pol.ws.dao.UsuarioDao;
-import py.una.pol.ws.domain.Usuario;
+import py.una.pol.ws.dao.HijosDao;
+import py.una.pol.ws.domain.Correo;
+import py.una.pol.ws.domain.Hijo;
 
 @Repository
-public class UsuarioDaoImpl extends DaoImpl implements UsuarioDao {
+public class HijosDaoImpl extends DaoImpl implements HijosDao {
 
-	@Override
-	public List<Usuario> getList() {
+    @Override
+    public List<Hijo> getListByUsuarioId(Integer usuarioId) {
 
-		return getListFromSQL(Usuario.class, "SELECT id, nombre, correo FROM usuarios");
-	}
+        return getListFromSQL(Hijo.class, "SELECT id, nombre, apellido, sexo, fecha_nac as \"fechaNac\" FROM hijos WHERE id_usuario = ?", usuarioId);
+        //return getListFromSQL(Hijo.class, "SELECT id, nombre FROM hijos WHERE id_usuario = ?", usuarioId);
+    }
 
-	@Override
-	public void create(Usuario usuario) {
-		String sql = "INSERT INTO usuarios(nombre, correo) VALUES (?, ?)";
-		super.create(sql, usuario.getNombre(), usuario.getCorreo());
-
-	}
-
-	@Override
-	public Usuario find(Integer id) {
-		String sql = "SELECT id, nombre, correo FROM usuarios WHERE id = ?";
-		return super.getObjectFromSQL(sql, Usuario.class, id);
-	}
-
-	// Buscar por correo
-	@Override
-	public Usuario findCorreo(String correo) {
-		String sql = "SELECT id, nombre, correo FROM usuarios WHERE correo = ?";
-		return super.getObjectFromSQL(sql, Usuario.class, correo);
-	}
-
-	@Override
-	public void borrar(Integer id) {
-		String sql = "DELETE FROM usuarios WHERE id = ?";
-		SQLExecuter exec = new SQLExecuter(getDsPool());
-		exec.execute(ds, sql, id);
-
-	}
 }

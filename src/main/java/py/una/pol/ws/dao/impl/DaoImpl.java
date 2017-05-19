@@ -14,7 +14,7 @@ import py.una.pol.ws.main.AppObjects;
 @Repository
 public class DaoImpl {
 
-	protected static final String ds = "java:jboss/datasources/aguappDS";
+	protected static final String ds = "java:jboss/datasources/vacunas";
 	@Autowired
 	private AppObjects appObjects;
 

@@ -9,8 +9,10 @@ public class Usuario {
 
 	@NotNull(message="Debe ingresar nombre")
 	private String nombre;
+        @NotNull(message="Debe ingresar apellido")
+	private String apellido;
 	@NotNull(message="Debe ingresar correo")
-	@Email(message="Email mal formado")
+	//@Email(message="Email mal formado")
 	private String correo;
 	public Integer getId() {
 		return id;
@@ -24,6 +26,12 @@ public class Usuario {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
+        public String getApellido() {
+		return apellido;
+	}
+	public void setApellido(String apellido) {
+		this.apellido = apellido;
+	}  
 	public String getCorreo() {
 		return correo;
 	}

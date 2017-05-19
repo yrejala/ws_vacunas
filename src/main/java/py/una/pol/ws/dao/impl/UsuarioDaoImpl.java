@@ -14,28 +14,28 @@ public class UsuarioDaoImpl extends DaoImpl implements UsuarioDao {
 	@Override
 	public List<Usuario> getList() {
 
-		return getListFromSQL(Usuario.class, "SELECT id, nombre, correo FROM usuarios");
+		return getListFromSQL(Usuario.class, "SELECT id, nombre, apellido, correo FROM usuarios");
 	}
 
 	@Override
 	public void create(Usuario usuario) {
-		String sql = "INSERT INTO usuarios(nombre, correo) VALUES (?, ?)";
+		String sql = "INSERT INTO usuarios(nombre,apellido, correo) VALUES (?, ?, ?)";
 		super.create(sql, usuario.getNombre(), usuario.getCorreo());
 
 	}
 
 	@Override
 	public Usuario find(Integer id) {
-		String sql = "SELECT id, nombre, correo FROM usuarios WHERE id = ?";
+		String sql = "SELECT id, nombre, apellido, correo FROM usuarios WHERE id = ?";
 		return super.getObjectFromSQL(sql, Usuario.class, id);
 	}
 
 	// Buscar por correo
-	@Override
-	public Usuario findCorreo(String correo) {
-		String sql = "SELECT id, nombre, correo FROM usuarios WHERE correo = ?";
-		return super.getObjectFromSQL(sql, Usuario.class, correo);
-	}
+	//@Override
+	//public Usuario findCorreo(String correo) {
+	//	String sql = "SELECT id, nombre, correo FROM usuarios WHERE correo = ?";
+	//	return super.getObjectFromSQL(sql, Usuario.class, correo);
+	//}
 
 	@Override
 	public void borrar(Integer id) {
